@@ -18,6 +18,10 @@
 
 v22.16.0
 
+- node 버전 변경 필요시 nvm 설치
+- nvm ls (설치된 node 버전 모두 보기)
+- nvm use vX.X.X (특정 node 버전 사용하기)
+
 ## Available Scripts
 
 In the project directory, you can run:
