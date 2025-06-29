@@ -6,15 +6,6 @@ import type { RootState } from '../../store';
 
 const Header = () => {
   const { user, loading } = useSelector((state: RootState) => state.auth);
-
-  /** issue
-   * 페이지 새로고침하면 Redux store가 초기화 상태에서
-   * 비동기 Firebase Auth 세션 복원으로 user 값이 null 에서 Firebase 인증 후 적용되는 과정에
-   * UI 깜박임 문제는 부분적으로 처리했지만,
-   * 추후, Firebase 인증을 완료 된 후에 전체 UI를 렌더링하는 구조로 변경이 필요함
-   *
-   */
-
   return (
     <header className='layout_header'>
       <h1 className='layout_header_logo'>
