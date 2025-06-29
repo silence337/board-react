@@ -1,18 +1,17 @@
 import React from 'react';
-
-interface Board {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  date: string;
-}
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import type { Board } from '../../types/board';
 
 interface Props {
   boardView: Board | null;
 }
 
 const BoardDetail = ({ boardView }: Props) => {
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAuthor = boardView && user && boardView.author === user.displayName;
+
   if (!boardView) return <p>게시글이 없습니다.</p>;
   return (
     <div className=''>
@@ -40,6 +39,11 @@ const BoardDetail = ({ boardView }: Props) => {
           </tr>
         </tbody>
       </table>
+      {isAuthor && (
+        <Link to={`/FreeBoard/edit/${boardView.id}`}>
+          <button>수정하기</button>
+        </Link>
+      )}
     </div>
   );
 };

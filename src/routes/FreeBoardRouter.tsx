@@ -2,6 +2,7 @@ import FreeBoardList from '../pages/freeboad/List';
 import FreeBoardLayout from '../pages/freeboad/Layout';
 import FreeBoardDetail from '../pages/freeboad/Detail';
 import FreeBoardCreate from '../pages/freeboad/Create';
+import FreeBoardEdit from '../pages/freeboad/Edit';
 import PrivateRoute from './PrivateRoute';
 
 const boardRoutes = {
@@ -23,10 +24,10 @@ const boardRoutes = {
           path: '/FreeBoard/write',
           element: <FreeBoardCreate />,
         },
-        // {
-        //   path: 'edit/:id',
-        //   element: <BoardEdit />,
-        // },
+        {
+          path: '/FreeBoard/edit/:id',
+          element: <FreeBoardEdit />,
+        },
       ],
     },
   ],

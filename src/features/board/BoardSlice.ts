@@ -4,8 +4,8 @@ import {
   type PayloadAction,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
+import type { Board } from '../../types/board';
 import { type User, getAuth } from 'firebase/auth';
-import { type Board } from '../../types/board';
 
 interface BoardState {
   list: Board[];
@@ -59,6 +59,22 @@ export const createBoard = createAsyncThunk(
   }
 );
 
+// 수정 페이지
+export const updateBoard = createAsyncThunk(
+  'board/update',
+  async (updatedBoard: Board, thunkAPI) => {
+    const auth = getAuth();
+    const firebaseUser = auth.currentUser; // Firebase 에서 현재 로그인 유저 가져오기
+    const headers = await getAuthHeaders(firebaseUser);
+    await axios.put(
+      `http://localhost:3001/posts/${updatedBoard.id}`,
+      updatedBoard,
+      { headers }
+    );
+    thunkAPI.dispatch(fetchBoardList()); // 글 등록 후 목록 갱신
+  }
+);
+
 const boardSlice = createSlice({
   name: 'board',
   initialState,
@@ -90,6 +106,7 @@ const boardSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchBoardById.fulfilled, (state, action) => {
+        console.log('fetchBoardById fulfilled, payload:', action.payload);
         state.loading = false;
         state.current = action.payload;
       })

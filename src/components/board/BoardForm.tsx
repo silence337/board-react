@@ -11,20 +11,24 @@ type FormValues = {
 
 interface Props {
   onSubmit: (data: FormValues) => void | Promise<void>;
+  initialValues?: Partial<FormValues>;
 }
 
-const BoardForm = ({ onSubmit }: Props) => {
-  const { setValue } = useForm();
+const BoardForm = ({ onSubmit, initialValues }: Props) => {
+  //const { setValue } = useForm();
   const user = useSelector((state: RootState) => state.auth.user);
 
   const {
     register,
     handleSubmit,
+    setValue,
     //formState: { errors },
   } = useForm<FormValues>({
     mode: 'onSubmit',
     defaultValues: {
-      author: user?.displayName || '',
+      title: initialValues?.title || '',
+      content: initialValues?.content || '',
+      author: initialValues?.author || '',
     },
   });
 
@@ -41,11 +45,17 @@ const BoardForm = ({ onSubmit }: Props) => {
     if (firstError) alert(firstError);
   };
 
-  console.log(user);
   useEffect(() => {
-    const authorName = user?.displayName;
-    setValue('author', authorName);
-  }, [user, setValue]);
+    console.log(initialValues);
+    if (initialValues) {
+      console.log(initialValues.title);
+      setValue('title', initialValues.title || '');
+      setValue('content', initialValues.content || '');
+      setValue('author', initialValues.author || '');
+    } else {
+      setValue('author', user?.displayName ?? '');
+    }
+  }, [initialValues, user, setValue]);
 
   return (
     <div className=''>

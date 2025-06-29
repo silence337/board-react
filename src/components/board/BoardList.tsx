@@ -1,13 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-
-interface Board {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  date: string;
-}
+import type { Board } from '../../types/board';
 
 interface Props {
   board: Board[];
