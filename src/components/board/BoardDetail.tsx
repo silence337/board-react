@@ -5,42 +5,40 @@ import { RootState } from '../../store';
 import type { Board } from '../../types/board';
 
 interface Props {
-  boardView: Board | null;
+  board: Board | null;
 }
 
-const BoardDetail = ({ boardView }: Props) => {
+const BoardDetail = ({ board }: Props) => {
   const user = useSelector((state: RootState) => state.auth.user);
-  const isAuthor = boardView && user && boardView.author === user.displayName;
+  const isAuthor = board && user && board.author === user.displayName;
 
-  if (!boardView) return <p>게시글이 없습니다.</p>;
+  if (!board) return <p>게시글이 없습니다.</p>;
   return (
     <div className=''>
       <table className='table_board_view'>
         <tbody>
           <tr>
             <th>제목</th>
-            <td>{boardView.title}</td>
+            <td>{board.title}</td>
           </tr>
           <tr>
             <th>작성자</th>
-            <td>{boardView.author}</td>
+            <td>{board.author}</td>
           </tr>
           <tr>
             <th>날짜</th>
-            <td>{new Date(boardView.date).toLocaleDateString('ko-KR')}</td>
+            <td>{new Date(board.date).toLocaleDateString('ko-KR')}</td>
           </tr>
           <tr className='table_board_view-content'>
             <th>내용</th>
             <td>
-              <div className='table_board_view-textwrap'>
-                {boardView.content}
-              </div>
+              <div className='table_board_view-textwrap'>{board.content}</div>
             </td>
           </tr>
         </tbody>
       </table>
       {isAuthor && (
-        <Link to={`/FreeBoard/edit/${boardView.id}`}>
+        <Link to={`/FreeBoard/edit/${board.id}`}>
           <button>수정하기</button>
         </Link>
       )}
