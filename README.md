@@ -3,6 +3,7 @@
 ## react v19, vite, typescrit, redux-tookit, firebase(Auth)
 
 - 회원가입, 로그인 → Firebase Auth 로 작업
+- 이메일 계정으로 회원가입, 이메일 계정 인증 처리는 하지 않아서 임의로 없는 이메일 계정으로 가입 가능.
 
 ## Free Board
 
