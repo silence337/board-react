@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+@use 'sass:math';
+@use 'base/mixin';
+@use 'base/reset';
+@use 'base/comm';
+
+:root {
+  --font-face: 'Roboto', '맑은 고딕';
+}
+
+// layout
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 50px;
+  color: #3b3b3b;
+  font-family: var(--font-face);
+}
+.layout_header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 150px;
+
+  .layout_header_logo {
+    p {
+      font-size: 14px;
+      font-weight: normal;
+      opacity: 0.7;
+    }
+  }
+  .layout_header_nav {
+  }
+
+  .layout_header_join {
+    display: flex;
+  }
+}
+.layout_footer {
+  padding: 100px 0;
+  text-align: center;
+}

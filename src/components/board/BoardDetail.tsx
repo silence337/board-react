@@ -1,4 +1,12 @@
-import type { Board } from '../../types/board';
+import React from 'react';
+
+interface Board {
+  id: number;
+  title: string;
+  content: string;
+  author: string;
+  date: string;
+}
 
 interface Props {
   boardView: Board | null;
@@ -7,15 +15,31 @@ interface Props {
 const BoardDetail = ({ boardView }: Props) => {
   if (!boardView) return <p>게시글이 없습니다.</p>;
   return (
-    <div className='max-w-3xl mx-auto p-6 bg-white rounded shadow'>
-      <h2 className='text-2xl font-bold mb-2'>{boardView.title}</h2>
-      <div className='text-gray-500 text-sm mb-4'>
-        작성자: {boardView.author} | 작성일:{' '}
-        {new Date(boardView.date).toLocaleDateString('ko-KR')}
-      </div>
-      <div className='text-gray-800 leading-relaxed whitespace-pre-line'>
-        {boardView.content}
-      </div>
+    <div className=''>
+      <table className='table_board_view'>
+        <tbody>
+          <tr>
+            <th>제목</th>
+            <td>{boardView.title}</td>
+          </tr>
+          <tr>
+            <th>작성자</th>
+            <td>{boardView.author}</td>
+          </tr>
+          <tr>
+            <th>날짜</th>
+            <td>{new Date(boardView.date).toLocaleDateString('ko-KR')}</td>
+          </tr>
+          <tr className='table_board_view-content'>
+            <th>내용</th>
+            <td>
+              <div className='table_board_view-textwrap'>
+                {boardView.content}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };

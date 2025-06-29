@@ -16,6 +16,7 @@ const FreeBoard = () => {
   const { list, loading, error, currentPage, listsPerPage } = useSelector(
     (state: RootState) => state.board
   );
+  //const displayName = useSelector((state: RootState) => state.auth.user);
 
   const onPageChange = (pageNum: number) => {
     // uri에 페이징 쿼리 파라미터 추가
@@ -27,7 +28,7 @@ const FreeBoard = () => {
     dispatch(fetchBoardList());
   }, [dispatch, page]);
 
-  if (loading) return <p>로딩중...</p>;
+  if (loading) return;
   if (error) return <p>오류 발생: {error}</p>;
   if (list.length === 0) return <p>게시글이 없습니다.</p>;
 
@@ -42,6 +43,7 @@ const FreeBoard = () => {
         totalItems={list.length}
         itemsPerPage={listsPerPage}
         currentPage={currentPage}
+        pageLimit={5}
         onPageChange={onPageChange}
       />
     </div>

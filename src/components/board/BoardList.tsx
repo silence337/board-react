@@ -1,6 +1,13 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import type { Board } from '../../types/board';
+
+interface Board {
+  id: number;
+  title: string;
+  content: string;
+  author: string;
+  date: string;
+}
 
 interface Props {
   board: Board[];
@@ -24,47 +31,41 @@ const List = ({ board, currentPage, listsPerPage }: Props) => {
   }, [sortedList, currentPage, listsPerPage]);
 
   return (
-    <div className='container max-w-3xl px-4 mx-auto sm:px-8'>
-      <div className='py-8'>
-        <div className='px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8'>
-          <div className='inline-block min-w-full overflow-hidden rounded-lg shadow'>
-            <h2 className='text-2xl font-semibold mb-4'>📋 게시판</h2>
-            <table className='min-w-full leading-normal'>
-              <thead>
-                <tr className='bg-gray-100 text-gray-600'>
-                  <th className='w-1/12 p-2 text-left'>번호</th>
-                  <th className='w-7/12 p-2 text-left'>제목</th>
-                  <th className='w-2/12 p-2 text-left'>작성자</th>
-                  <th className='w-2/12 p-2 text-left'>작성일</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentLists.map((list, index) => {
-                  const number =
-                    board.length - (currentPage - 1) * listsPerPage - index;
-                  return (
-                    <tr
-                      key={list.id}
-                      className='border-b hover:bg-gray-50 cursor-pointer'
-                    >
-                      <td className='p-2'>{number}</td>
-                      <td className='p-2 text-blue-600 hover:underline'>
-                        <Link to={`/FreeBoard/post/${list.id}`}>
-                          {list.title}
-                        </Link>
-                      </td>
-                      <td className='p-2'>{list.author}</td>
-                      <td className='p-2'>
-                        {new Date(list.date).toLocaleDateString('ko-KR')}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div className=''>
+      <table>
+        <colgroup>
+          <col width='10%'></col>
+          <col width='60%'></col>
+          <col width='15%'></col>
+          <col width='15%'></col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentLists.map((list, index) => {
+            const number =
+              board.length - (currentPage - 1) * listsPerPage - index;
+            return (
+              <tr key={list.id} className=''>
+                <td className=''>{number}</td>
+                <td className='subject'>
+                  <Link to={`/FreeBoard/post/${list.id}`}>{list.title}</Link>
+                </td>
+                <td className=''>{list.author}</td>
+                <td className=''>
+                  {new Date(list.date).toLocaleDateString('ko-KR')}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };

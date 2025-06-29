@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { getAuth, onAuthStateChanged, type User } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { setUser, logout } from './features/auth/AuthSlice';
+import { setUser, logout, setLoading } from './features/auth/AuthSlice';
 
 //Firebase 인증 상태 감지 및 Redux 저장
 const AuthListener = () => {
@@ -15,11 +15,13 @@ const AuthListener = () => {
         const safeUser = {
           uid: user.uid,
           email: user.email,
+          displayName: user.displayName,
         };
         dispatch(setUser(safeUser));
       } else {
         dispatch(logout());
       }
+      dispatch(setLoading(false));
     });
     return () => unsubscribe();
   }, [dispatch]);

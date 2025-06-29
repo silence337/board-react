@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuthForm from '../components/auth/AuthForm';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -11,8 +11,7 @@ const LoginPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const from = location.state?.from?.pathname || '/';
-  console.log('location state:', location.state);
+  const from = location.state?.from.pathname || '/';
 
   const handleLogin = async (data: { email: string; password: string }) => {
     setLoading(true);
@@ -20,7 +19,12 @@ const LoginPage = () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       alert('로그인 성공!');
-      navigate(from, { replace: true });
+
+      if (from === '/login' || from === '/register') {
+        navigate('/', { replace: true });
+      } else {
+        navigate(from, { replace: true });
+      }
     } catch (err) {
       if (err instanceof FirebaseError) {
         setError(err.message); // 또는 err.code, err.name 등
@@ -31,6 +35,8 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <AuthForm

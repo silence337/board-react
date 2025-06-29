@@ -19,7 +19,7 @@ const FreeBoardDetail = () => {
     if (id) dispatch(fetchBoardById(id));
   }, [id, dispatch]);
 
-  if (loading) return <p>로딩 중...</p>;
+  if (loading) return;
   if (error) return <p>{error}</p>;
   if (!board) return <p>게시글 없음</p>;
 

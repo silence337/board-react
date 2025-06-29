@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const LogoutButton = () => {
   const dispatch = useDispatch();
   const auth = getAuth();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const { user, loading } = useSelector((state: RootState) => state.auth);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -16,6 +16,7 @@ const LogoutButton = () => {
     try {
       await signOut(auth);
       dispatch(logout()); // 리덕스 상태 초기화
+      if (!user && !loading) return navigate('/login');
     } catch (error) {
       console.error('로그아웃 실패:', error);
     }
@@ -25,23 +26,22 @@ const LogoutButton = () => {
     navigate('/login', { state: { from: location } });
   };
 
-  if (user) {
-    return (
-      <button
-        onClick={handleLogout}
-        className='bg-red-500 text-white px-4 py-2 rounded'
-      >
-        로그아웃
-      </button>
-    );
+  if (loading) {
+    return;
   }
+
   return (
-    <button
-      onClick={handleLogin}
-      className='bg-red-500 text-white px-4 py-2 rounded'
-    >
-      로그인
-    </button>
+    <span>
+      {user ? (
+        <button type='button' onClick={handleLogout} className='button -blue'>
+          Logout
+        </button>
+      ) : (
+        <button type='button' onClick={handleLogin} className='button -blue'>
+          Login
+        </button>
+      )}
+    </span>
   );
 };
 

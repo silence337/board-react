@@ -80,7 +80,7 @@ const boardSlice = createSlice({
       })
       .addCase(fetchBoardList.rejected, (state) => {
         state.loading = false;
-        state.error = '게시글 목록을 불러올 수 없습니다.';
+        state.error = '게시글 목록을 불러올 수 없습니다. ';
       });
 
     // 상세페이지 처리
@@ -95,7 +95,8 @@ const boardSlice = createSlice({
       })
       .addCase(fetchBoardById.rejected, (state) => {
         state.loading = false;
-        state.error = '게시글을 불러올 수 없습니다.';
+        state.error =
+          '게시글을 불러올 수 없습니다. (npx json-server --watch db.json --port 3001)';
       });
   },
 });
